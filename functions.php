@@ -113,4 +113,38 @@
 		
 	}
 	
+	function getallcars() {
+		
+		$database = "if16_georg";
+		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $database);
+		
+		$stmt=$mysqli->prepare("
+			SELECT id, plate, color
+			FROM cars_and_colors
+		");
+		
+		$stmt->bind_result($id, $plate, $color);
+		$stmt->execute();
+		
+		$result=array();
+		
+		while($stmt->fetch()) {
+			
+			$car= new stdclass();
+			
+			$car->id=$id;
+			$car->plate=$plate;
+			$car->color=$color;
+			
+			//echo $plate."<br>";
+			array_push($result, $car);
+		}
+		
+		$stmt->close();
+		$mysqli->close();
+		
+		return $result;
+	}
+	
+	
 ?>

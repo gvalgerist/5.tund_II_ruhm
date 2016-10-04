@@ -29,8 +29,11 @@
 		
 	}
 
-
-
+	$cardata=getallcars();
+	echo"<pre>";
+	var_dump($cardata);
+	echo"</pre>";
+	
 ?>
 <h1>Data</h1>
 
@@ -42,7 +45,7 @@
 
 	<form method="POST">
 
-		<h1>Salvesta auto</h1><br>
+		<label>Salvesta auto</label><br><br>
 	
 		<label>Auto number</label><br>
 		<input name="plate" type="text" placeholder="123 ABC"><br><br>
@@ -57,12 +60,33 @@
 
 	</form>
 
+<h2>Autod</h2>
+<?php
+
+	$html = "<table>";
+	
+	$html .= "<tr>";
+		$html .= "<th>id</th>";
+		$html .= "<th>plate</th>";
+		$html .= "<th>color</th>";
+	$html .= "</tr>";
+	
+	foreach($cardata as $c) {
+		//echo $c->plate."<br>";
+		
+		$html .= "<tr>";
+			$html .= "<td>".$c->id."</td>";
+			$html .= "<td>".$c->plate."</td>";
+			$html .= "<td style='color:".$c->color."'>".$c->color."</td>";
+		$html .= "</tr>";
+		
+	}
+
+	$html .= "</table>";
+
+	echo $html;
 
 
-
-
-
-
-
+?>
 
 
