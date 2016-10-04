@@ -1,5 +1,7 @@
 <?php
 	
+	require("../../config.php");
+	
 	//functioons.php
 	//var_dump($GLOBALS);
 	
@@ -86,5 +88,29 @@
 	
 	}
 
-
+	function savecar ($plate, $color) {
+		
+		$database = "if16_georg";
+		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $database);
+		
+		$stmt = $mysqli->prepare("INSERT INTO cars_and_colors(plate, color) VALUES(?, ?)");
+	
+		echo $mysqli->error;
+		
+		$stmt->bind_param("ss", $plate, $color);
+		
+		if($stmt->execute()) {
+			
+			echo "salvestamine onnestus";
+			
+		} else {
+			
+			echo "ERROR".$stmt->error;
+		}
+		
+		$stmt->close();
+		$mysqli->close();
+		
+	}
+	
 ?>
