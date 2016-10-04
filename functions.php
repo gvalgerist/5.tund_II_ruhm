@@ -2,7 +2,7 @@
 	
 	require("../../config.php");
 	
-	//functioons.php
+	//functions.php
 	//var_dump($GLOBALS);
 	
 	
@@ -18,11 +18,11 @@
 		$database = "if16_georg";
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $database);
 		
-		$stmt = $mysqli->prepare("INSERT INTO user_sample(email, password) VALUES(?, ?)");
+		$stmt = $mysqli->prepare("INSERT INTO proov(email, password, gender, DateOfBirth) VALUES(?, ?, ?, ?)");
 	
 		echo $mysqli->error;
 		
-		$stmt->bind_param("ss", $email, $password);
+		$stmt->bind_param("ssss", $email, $password, $gender, $DateOfBrith);
 		
 		if($stmt->execute()) {
 			
@@ -45,7 +45,7 @@
 		$database = "if16_georg";
 		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $database);
 		
-		$stmt = $mysqli->prepare("SELECT id, email, password, created FROM user_sample WHERE email=?");
+		$stmt = $mysqli->prepare("SELECT id, email, password, created FROM proov WHERE email=?");
 	
 		echo $mysqli->error;
 		

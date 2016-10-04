@@ -7,28 +7,24 @@
 	//kui on see siis suunan data lehele
 	if(isset($_SESSION["userId"])){
 		
-		//suunan sisselogimise lehele
 		header("Location: data.php");
 		
 	}
-	
-	
-	//get ja post muutujad
-	//var_dump ($_GET);
-	//echo "<br>";
-	//var_dump ($_POST);
-	
-	$signupEmailError= "";
-	$signupPasswordError= "";
-	$reenterpasswordError= "";
 	
 	$signinEmailError= "";
 	$signinPasswordError= "";
 	$signinemail= "";
 	
+	
+	$signupEmailError= "";
+	$signupPasswordError= "";
+	$reenterpasswordError= "";
+	
 	$signupemail = "";
 	$signupGender = "";
 	$signupGenderError = "";
+	$signupDateOfBirth = "";
+	$signupDateOfBirthError= "";
 	
 	if(isset($_POST["signupemail"])){
 		
@@ -52,6 +48,15 @@
 			
 		}
 		
+		if(isset($_POST["signupDateOfBirth"])) {
+			
+			$signupDateOfBirth = $_POST["signupDateOfBirth"];
+			
+		} else {
+			
+			$signupDateOfBirthError= "See valik on kohustuslik";
+			
+		}
 	}
 	
 	if(isset($_POST["signuppassword"])){
@@ -83,27 +88,33 @@
 		}
 	}
 	
-	if(isset($_POST["signupGender"])){
+	//if(isset($_POST["signupGender"])){
 		
-		if(!empty($_POST["signupGender"])){
+		//if(!empty($_POST["signupGender"])){
 			
-			$signupGender = $_POST["signupGender"];
+			//$signupGender = $_POST["signupGender"];
 			
-		}
+		//}
 		
-	}
+	//}
 	
 	
 	if(isset($_POST["signupemail"]) &&
 		isset($_POST["signuppassword"]) &&
+		isset($_POST["signupGender"]) &&
+		isset($_POST["signupDateOfBirth"]) &&
 		$signupEmailError=="" &&
-		$signupPasswordError==""
+		$signupPasswordError=="" &&
+		$signupGenderError=="" &&
+		$signupDateOfBirthError= ""
 		) {
 		
 		echo "Salvestan... <br>";
 		
 		echo "email: ".$signupemail."<br>";
 		echo "password: ".$_POST["signuppassword"]."<br>";
+		echo "gender: ".$signupGender."<br>";
+		echo "DateOfBirth: ".$signupDateOfBirth."<br>";
 		
 		$password = hash("sha512", $_POST["signuppassword"]);
 		
@@ -111,7 +122,7 @@
 		
 		//echo $serverUsername;
 		
-		signUp($signupemail, $password);
+		signUp($signupemail, $password, $signupGender, $signupDateOfBirth);
 		
 	}
 	
@@ -210,8 +221,8 @@
 		
 		<br>
 		
-		<b><label>*Sunnikuupaev:</label></b><br>
-		<input name="bday" type="date" value="2015-12-12" max="2016-01-01" min="1900-01-01">
+		<b><label>*Sunnikuupaev:</label></b><?php echo $signupDateOfBirthError; ?><br>
+		<input name="signupDateOfBirth" type="date" max="2016-01-01" min="1900-01-01">
 		<br><br>
 		
 		<b><label>Riik:</label></b><br>
